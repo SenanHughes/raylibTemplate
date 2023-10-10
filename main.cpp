@@ -8,6 +8,16 @@ int main() {
     // Initialize the Window
     InitWindow(screenWidth, screenHeight, "My Game");
 
+    Texture2D marioTexture = LoadTexture("Resources/Textures/mario.png");
+
+    Vector2 scale = {0.5f/0.5f};
+
+    float rotation = 0.0f;
+    Color tint = WHITE;
+    
+    Vector2 position = {(screenWidth - (marioTexture.width * scale.x))/2, (screenHeight-(marioTexture.height * scale.y))/2};
+    
+
     // Setting the Frames Per Second
     SetTargetFPS(60);
 
@@ -17,10 +27,10 @@ int main() {
         // Setup Canvas
         BeginDrawing();
         // Clear canvas to a specific color to avoid flicker
-        ClearBackground(RAYWHITE);
+        ClearBackground(PINK);
 
         // Here goes all the Game Logic
-
+        DrawTextureEx(marioTexture, position, rotation, 0.5f, tint);
         // teardown Canvas
         EndDrawing();
     }
