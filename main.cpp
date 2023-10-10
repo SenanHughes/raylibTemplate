@@ -6,13 +6,16 @@ int main() {
     const int screenHeight = 600;
 
     // Initialize the Window
-    InitWindow(screenWidth, screenHeight, "Raylib Follow Mouse and Change Colour");
+    InitWindow(screenWidth, screenHeight, "Font Loading and Input");
 
-    Texture2D marioTexture = LoadTexture("Resources/Textures/mario.png");
+    Font customFont = LoadFont("Resources/Textures/Walkway_UltraBold.ttf");
 
-    Vector2 scale = {0.5f, 0.5f};
+    const char *text = "Hello, raylib";
 
-    Color tint = WHITE;
+    Vector2 textPosition = {10, screenHeight/2 - 20};
+    int textSize = 20;
+    Color textColour = RAYWHITE;
+    
 
 
     // Setting the Frames Per Second
@@ -20,37 +23,30 @@ int main() {
 
     // The Game Loop
     while (!WindowShouldClose() /*WindowShouldClose returns true if esc is clicked and closes the window*/) {
+        
+        if(IsKeyPressed(KEY_UP)) textSize += 10;
+        if(IsKeyPressed(KEY_DOWN) && textSize > 10)textSize -= 10;
+        if(IsKeyPressed(KEY_R)) textColour = RED;
+        if(IsKeyPressed(KEY_G)) textColour = GREEN;
+        if(IsKeyPressed(KEY_B)) textColour = BLUE;
+        if(IsKeyPressed(KEY_W)) textColour = WHITE;
 
-        Vector2 position = GetMousePosition();
-        position.x -= marioTexture.width * scale.x/2;
-        position.y -= marioTexture.height * scale.y/2;
-
-        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-            tint = (Color){ 
-                (unsigned char)GetRandomValue(50,255),
-                (unsigned char)GetRandomValue(50,255),
-                (unsigned char)GetRandomValue(50,255), 255
-            };
-        }
-        if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
-            tint = WHITE;
-        }
+        
         // Setup Canvas
         BeginDrawing();
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(PINK);
 
         // Here goes all the Game Logic
-        DrawTextureEx(marioTexture, position, 0, 0.5f, tint);
+        DrawText(text, textPosition.x, textPosition.y, textSize, textColour);
+        DrawText("Use arrow keys to change size, R/G/B/W to change colour", 10, screenHeight - 40, 10, GRAY);
 
-
+        DrawTextEx(customFont, "Custom Font Text", (Vector2){screenWidth/2,20}, customFont.baseSize, 2, DARKPURPLE);
 
         // teardown Canvas
         EndDrawing();
     }
-
-    UnloadTexture(marioTexture);
-
+    UnloadFont(customFont);
     CloseWindow();
     return 0;
 }
