@@ -39,7 +39,7 @@ int main() {
         ClearBackground(PINK);
 
         // Here goes all the Game Logic
-        DrawTextureEx(marioTexture, position, rotation, 0.5f, tint);
+        TextureEx(marioTexture, position, rotation, 0.5f, tint);
 
 
 
