@@ -6,18 +6,13 @@ int main() {
     const int screenHeight = 600;
 
     // Initialize the Window
-    InitWindow(screenWidth, screenHeight, "Input Movement Example");
+    InitWindow(screenWidth, screenHeight, "Raylib Follow Mouse and Change Colour");
 
     Texture2D marioTexture = LoadTexture("Resources/Textures/mario.png");
 
-    Vector2 scale = {0.25f, 0.25f};
+    Vector2 scale = {0.5f, 0.5f};
 
-    float rotation = 0.0f;
     Color tint = WHITE;
-    
-    Vector2 position = {(screenWidth - (marioTexture.width * scale.x))/2, (screenHeight-(marioTexture.height * scale.y))/2};
-    
-    const float moveSpeed = 5.0f;
 
 
     // Setting the Frames Per Second
@@ -26,20 +21,27 @@ int main() {
     // The Game Loop
     while (!WindowShouldClose() /*WindowShouldClose returns true if esc is clicked and closes the window*/) {
 
-        if(IsKeyDown(KEY_RIGHT)) position.x += moveSpeed;
-        if(IsKeyDown(KEY_LEFT)) position.x -= moveSpeed;
-        if(IsKeyDown(KEY_UP)) position.y += moveSpeed;
-        if(IsKeyDown(KEY_DOWN)) position.y -= moveSpeed;
+        Vector2 position = GetMousePosition();
+        position.x -= marioTexture.width * scale.x/2;
+        position.y -= marioTexture.height * scale.y/2;
 
-        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) rotation += 10.0f;
-        if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) rotation -= 10.0f;
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+            tint = (Color){ 
+                (unsigned char)GetRandomValue(50,255),
+                (unsigned char)GetRandomValue(50,255),
+                (unsigned char)GetRandomValue(50,255), 255
+            };
+        }
+        if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
+            tint = WHITE;
+        }
         // Setup Canvas
         BeginDrawing();
         // Clear canvas to a specific color to avoid flicker
         ClearBackground(PINK);
 
         // Here goes all the Game Logic
-        TextureEx(marioTexture, position, rotation, 0.5f, tint);
+        DrawTextureEx(marioTexture, position, 0, 0.5f, tint);
 
 
 
