@@ -2,21 +2,18 @@
 
 int main() {
     // Determin the Game Window Width and Height
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = 1080;
+    const int screenHeight = 600;
 
     // Initialize the Window
-    InitWindow(screenWidth, screenHeight, "My Game");
+    InitWindow(screenWidth, screenHeight, "Conditionals");
 
-    Texture2D marioTexture = LoadTexture("Resources/Textures/mario.png");
-
-    Vector2 scale = {0.5f/0.5f};
-
-    float rotation = 0.0f;
-    Color tint = WHITE;
-    
-    Vector2 position = {(screenWidth - (marioTexture.width * scale.x))/2, (screenHeight-(marioTexture.height * scale.y))/2};
-    
+    bool isEven = false;
+    int number = 6;
+        
+    if (number%2 == 0){
+        isEven = true;
+    }
 
     // Setting the Frames Per Second
     SetTargetFPS(60);
@@ -30,7 +27,12 @@ int main() {
         ClearBackground(PINK);
 
         // Here goes all the Game Logic
-        DrawTextureEx(marioTexture, position, rotation, 0.5f, tint);
+        if(isEven){
+            DrawText("Number is even", 10, 10, 20, BLUE);
+        }else{
+            DrawText("Number is odd", 10, 10, 20, BLUE);
+        }
+
         // teardown Canvas
         EndDrawing();
     }
